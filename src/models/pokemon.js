@@ -14,10 +14,18 @@ export const pokemon_model = (sequelize, DataTypes) => {
       hp: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        validate:{
+          isInt: {msg: "Le champ hp doit être un nombre entier."},
+          notNull: {msg: "Le champ hp est une propriété requise."},
+        }
       },
       cp: {
         type: DataTypes.INTEGER,
         allowNull: false,
+         validate:{
+          isInt: {msg: "Le champ cp doit être un nombre entier."},
+          notNull: {msg: "Le champ cp est une propriété requise."},
+        }
       },
       picture: {
         type: DataTypes.STRING,

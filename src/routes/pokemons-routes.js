@@ -1,4 +1,3 @@
-import { pokemons } from "../../server.js";
 import { Pokemon } from "../database/sequelize.js";
 import express from "express";
 
