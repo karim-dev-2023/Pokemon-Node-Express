@@ -14,6 +14,12 @@ const app = express();
 app.use(logger);
 app.use(morgan("dev"));
 app.use(bodyParser.json());
+// Middleware pour gérer les erreurs 404
+app.use((req, res) => {
+  const message = "Impossible de trouver la ressource demandée ! Vous pouvez essayer une autre URL.";
+  res.status(404).json({message});
+});
+
 findPokemonByPk(app);
 let pokemons = [
   {
@@ -128,6 +134,7 @@ app.delete("/api/pokemon/:id", (req, res) => {
   const message = `Le pokemon ${pokemonDeleted.name} a bien été supprimé avec succès`;
   res.json(success(message, pokemonDeleted));
 });
+
 
 export default app;
 export { pokemons };
