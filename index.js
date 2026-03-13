@@ -3,8 +3,11 @@ import { initDb } from "./src/database/sequelize.js";
 import * as pokemonsRoutes from "./src/routes/pokemons-routes.js";
 import * as userRoutes from "./src/routes/user-routes.js";
 import authMdlr from "./src/auth/auth.js";
+import dotenv from "dotenv";
 
-const port = 3000;
+dotenv.config();
+
+const port = process.env.PORT || 3000;
 
 // initialization of DB can be done inside server.js or via explicit seeder if needed
 userRoutes.userLogin(app);

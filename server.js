@@ -17,7 +17,7 @@ import {
 const app = express();
 
 app.use(logger);
-app.use(morgan("dev"));
+// app.use(morgan("dev"));
 app.use(bodyParser.json());
 
 // on enregistre les routes Sequelize qui utilisent notre modèle
@@ -39,7 +39,7 @@ sequelize
   );
 
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.status(200).json(success("Bienvenue sur l'API Pokémon !"));
 });
  
 
