@@ -57,7 +57,11 @@ export function updatePokemon(app) {
   app.put("/api/pokemons/:id", (req, res) => {
     const id = parseInt(req.params.id);
     Pokemon.update(req.body, { where: { id } })
-      .then((_) => {
+      .then(([affectedCount]) => {
+        if (affectedCount === 0) {
+          const message = "Le pokémon n'existe pas.";
+          return res.status(404).json({ message });
+        }
         Pokemon.findByPk(id).then((pokemon) => {
           const message = `Le pokémon ${pokemon.name} a bien été mis à jour.`;
           res.json({ message, data: pokemon });

@@ -2,17 +2,21 @@ import app from "./server.js";
 import { initDb } from "./src/database/sequelize.js";
 import * as pokemonsRoutes from "./src/routes/pokemons-routes.js";
 import * as userRoutes from "./src/routes/user-routes.js";
+import authMdlr from "./src/auth/auth.js";
 
 const port = 3000;
 
 // initialization of DB can be done inside server.js or via explicit seeder if needed
+userRoutes.userLogin(app);
+app.use(authMdlr);
+
 app.use(pokemonsRoutes.findAllPokemons());
 pokemonsRoutes.findAllPokemons(app);
 pokemonsRoutes.createPokemon(app);
 pokemonsRoutes.findPokemonByPk(app);
 pokemonsRoutes.updatePokemon(app);
 pokemonsRoutes.deletePokemon(app);
-userRoutes.userLogin(app);
+
 
 // Initialize database with initial data
 const initialPokemons = [
