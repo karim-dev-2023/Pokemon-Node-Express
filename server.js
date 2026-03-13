@@ -30,17 +30,10 @@ deletePokemon(app);
 // création du modèle
 const Pokemon = pokemon_model(sequelize, DataTypes);
 
-// synchronisation avec la base
+// authentification de la connexion
 sequelize
-  .sync({ force: true })
-  .then(() => {
-    console.log(
-      "La synchronisation de notre modèle dans la base de données est réussie",
-    );
-
-    // vous pouvez remplir la base initialement ici si besoin
-    console.log("La base de données a été réinitialisée");
-  })
+  .authenticate()
+  .then(() => console.log("La connexion à la DB est établie avec succès"))
   .catch((error) =>
     console.error(`Erreur de synchronisation : ${error.message}`),
   );
@@ -48,9 +41,7 @@ sequelize
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
-
-// les routes CRUD sont désormais définies dans src/routes/pokemons-routes.js
-// aucune logique de tableau en mémoire ici
+ 
 
 
 export default app;
