@@ -1,9 +1,10 @@
 import { User } from '../database/sequelize.js';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { private_key } from '../auth/private_key.js';
 
 export function userLogin(app) {
-  app.post('/api/login', (req, res) => {
-    console.log('req.body:', req.body);
+  app.post('/api/login', (req, res) => { 
 
     User.findOne({ where: { username: req.body.username } }).then(user => {
 
@@ -18,8 +19,9 @@ export function userLogin(app) {
           return res.status(401).json({ message })
         }
 
+        const token = jwt.sign({ userId: user.id }, private_key, { expiresIn: '24h' })
         const message = `L'utilisateur a été connecté avec succès`
-        return res.json({ message, data: { id: user.id, username: user.username } })
+        return res.json({ message, data: { id: user.id, username: user.username },  token })
       })
     })
     .catch(error => {
